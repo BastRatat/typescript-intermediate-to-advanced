@@ -1,0 +1,11 @@
+{
+  "name": "typescript",
+  "version": "1.0.0",
+  "description": "TypeScript, intermediate to advanced",
+  "main": "index.ts",
+  "author": "Bastien Ratat",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^18.11.18"
+  }
+}

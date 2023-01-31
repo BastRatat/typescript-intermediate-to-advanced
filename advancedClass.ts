@@ -27,7 +27,7 @@ class UserFactory extends PractitionersFactory implements UserFactoryInterface {
   }
 
   get age() {
-    return this.age;
+    return this._age;
   }
 
   set accessToApps(accessToApp: Record<AppNames, boolean>) {

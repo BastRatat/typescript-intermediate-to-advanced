@@ -18,24 +18,16 @@ const environments = {
 
 const ENV: Env = "test";
 
-async function injectMockOrRepositoryFour<Fn extends AnyFunction>(
+async function injectMockOrRealData<Fn extends AnyFunction>(
   fn: Fn,
   getMockCallback: AnyAsyncFunction,
   getDatabaseCallBack: AnyAsyncFunction
 ) {
-  if (ENV === environments.TEST) {
-    const dataFromMock = await getMockCallback();
-    return async (...args: Parameters<Fn>): Promise<ReturnType<Fn>> => {
-      const val = await fn(...args, dataFromMock);
-      return val;
-    };
-  } else {
-    const dataFromDatabase = await getDatabaseCallBack();
-    return async (...args: Parameters<Fn>): Promise<ReturnType<Fn>> => {
-      const val = await fn(...args, dataFromDatabase);
-      return val;
-    };
-  }
+  return async (...args: Parameters<Fn>): Promise<ReturnType<Fn>> => {
+    const dataToInject = ENV === environments.TEST ? await getMockCallback() : getDatabaseCallBack()
+    const newFunction = await fn(...args, dataToInject);
+    return newFunction;
+  };
 }
 
 const fakeRecordFromDatabase = async (): Promise<DataType> => {
@@ -50,8 +42,8 @@ const fakeRecordFromDatabase = async (): Promise<DataType> => {
 const fakeRecordFromMock = async (): Promise<DataType> => {
   return new Promise<DataType>((resolve) => {
     resolve({
-      name: "Bastien",
-      age: 28,
+      name: "Antoine",
+      age: 32,
     });
   });
 };
@@ -67,7 +59,7 @@ function helloWorld<InjectedObjectType extends DataType>(
 }
 
 const runHigherOrderFunction = async () => {
-  const higherOrderFunction = await injectMockOrRepositoryFour(
+  const higherOrderFunction = await injectMockOrRealData(
     helloWorld,
     fakeRecordFromMock,
     fakeRecordFromDatabase

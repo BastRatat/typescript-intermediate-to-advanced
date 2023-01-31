@@ -1,19 +1,21 @@
 interface AnimalRefactoredInterface {
-  getAnimalInformation: () => string
+  getAnimalInformation: () => string;
 }
 
 class AnimalRefactored implements AnimalRefactoredInterface {
   constructor(
     private readonly _type: string,
-    public readonly speed: "slow" | "fast" | "average"
-  ) {}
+    public readonly speed: "slow" | "fast" | "average",
+  ) {
+
+  }
 
   get type() {
-    return this._type
+    return this._type;
   }
 
   public getAnimalInformation() {
-    return `your animal is ${this._type} and its speed is known to be ${this.speed}`
+    return `your animal is ${this._type} and its speed is known to be ${this.speed}`;
   }
 }
 
@@ -24,3 +26,4 @@ const lion = new AnimalRefactored("mammal", "average");
 // - classes implement interfaces to describe what can be done on an object
 // - respect the interface segregation principle
 // - private/protected properties require a getter to be read outside of the class
+// - static members are not associated with particular instances

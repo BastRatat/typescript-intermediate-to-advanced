@@ -35,5 +35,5 @@ const player = new LeagueOfLegendChampion();
 
 // TO SUM-UP
 // - can be useful but it's a bit antipattern
-// - add tremendous complexity in codecase
+// - add tremendous complexity in codebase
 // - difficult to maintain
